@@ -4,6 +4,11 @@ module ActiveRecord
       def initialize(file)
         require "sqlite3"
         @db = SQLite3::Database.new(file.to_s, results_as_hash: true)
+        # p @db
+        # #<SQLite3::Database:0x007fa1c7b6afb0 @tracefunc=nil,
+        # @authorizer=nil, @encoding=nil, @busy_handler=nil,
+        # @collations={}, @functions={}, @results_as_hash=true,
+        # @type_translation=nil, @readonly=false>
       end
 
       # Execute an SQL query and return the results as an array of hashes.
@@ -17,6 +22,12 @@ module ActiveRecord
       #
       def execute(sql)
         @db.execute(sql).each do |row|
+          # row 是一个散列
+          # 比如：
+          # {"id"=>1, "title"=>"find work",
+          # "body"=>nil, "created_at"=>"2017-10-09 13:38:27.225123",
+          # "updated_at"=>"2017-10-09 13:38:27.225123", 0=>1, 1=>"find work",
+          # 2=>nil, 3=>"2017-10-09 13:38:27.225123", 4=>"2017-10-09 13:38:27.225123"}
           row.keys.each do |key|
             value = row.delete(key)
             # Only keep string keys (ignores index-based key, 0, 1, ...)

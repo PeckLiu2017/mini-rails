@@ -18,8 +18,14 @@ RSpec.describe "ActiveRecordTest" do
 
   it "test_find" do
     post = Post.find(1)
-    p post
     expect(post).to be_a(Post)
+  end
+
+  it "test_all" do
+    post = Post.all.first
+    expect(post).to be_a(Post)
+    expect(post.id).to eq(1)
+    expect(post.title).to eq("find work")
   end
 
   it "test_execute_sql" do
