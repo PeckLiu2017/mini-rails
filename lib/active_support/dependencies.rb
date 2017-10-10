@@ -18,3 +18,17 @@ module ActiveSupport
     end
   end
 end
+
+class Module
+  def const_missing(name)
+    if file = ActiveSupport::Dependencies.search_for_file(name.to_s.underscore)
+      require file.sub(/\.rb$/,'')
+      # const_missing 方法需要一个返回值
+      # 否则会报如下错误 ——
+      # superclass must be a Class (TrueClass given)
+      const_get name
+    else
+      raise NameError, "Uninitialized constant #{name}"
+    end
+  end
+end

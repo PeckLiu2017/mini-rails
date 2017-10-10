@@ -1,11 +1,12 @@
 require_relative 'spec_helper'
 require 'active_record'
-# require_relative 'muffin_blog/app/models/application_record'
-# require_relative 'muffin_blog/app/models/post'
+require_relative 'muffin_blog/app/models/application_record'
+require_relative 'muffin_blog/app/models/post'
 # class Module
 #   # 方法缺失用 method_missing
 #   # 或者 define_method
 #   # 常量缺失用 const_missing
+#   # 将在 active_support 中重构常量加载
 #   def const_missing(name)
 #     puts "try to load #{name}"
 #   end
