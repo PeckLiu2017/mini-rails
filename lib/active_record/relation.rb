@@ -37,6 +37,7 @@ module ActiveRecord
       records.first
     end
 
+    # 不懂这个 each 方法是做什么的
     def each(&block)
       records.each(&block)
     end
