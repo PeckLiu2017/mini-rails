@@ -4,6 +4,14 @@ module ActiveRecord
       @attributes = attributes
     end
 
+    # def id
+    #   @attributes[:id]
+    # end
+    #
+    # def title
+    #   @attributes[:title]
+    # end
+    # 将之重构为 method_missing 方法
     def method_missing(name, *args)
       columns = self.class.connection.columns(self.class.table_name)
 
@@ -23,6 +31,8 @@ module ActiveRecord
     end
 
     def self.find(id)
+      # connection.execute("SELECT * FROM posts WHERE id = #{id.to_i}").first
+      # 加上 first 返回形式从数组变成散列
       find_by_sql("SELECT * FROM #{table_name} WHERE id = #{id.to_i}").first
     end
 
@@ -45,6 +55,7 @@ module ActiveRecord
     end
 
     def self.establish_connection(options)
+      # @@类变量
       @@connection = ConnectionAdapter::SqliteAdapter.new(options[:database])
     end
 
