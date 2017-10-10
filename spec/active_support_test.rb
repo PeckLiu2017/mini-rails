@@ -1,4 +1,7 @@
 require_relative 'spec_helper'
+# autoload 仅作用于应用中
+# mini-rails 的 active_record 文件还是要 require 加载
+require 'active_record'
 require 'active_support'
 
 RSpec.describe "ActiveSupportTest" do
