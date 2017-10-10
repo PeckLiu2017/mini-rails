@@ -44,6 +44,10 @@ module ActiveRecord
       all.where(*args)
     end
 
+    def self.first
+      all.first
+    end
+
     def self.order(*args)
       all.order(*args)
     end
