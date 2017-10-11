@@ -35,4 +35,16 @@ RSpec.describe "ActionControllerTest" do
     controller.process :show
     expect(controller.response).to eq(["callback", "show", "callback_after"])
   end
+
+  class Request
+    def params
+      { 'id' => 1 }
+    end
+  end
+
+  it "test_real_controller" do
+    controller = PostsController.new
+    controller.request = Request.new
+    controller.process :show
+  end
 end
