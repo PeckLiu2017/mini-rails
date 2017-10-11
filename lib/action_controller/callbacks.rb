@@ -1,0 +1,48 @@
+module ActionController
+  module Callbacks
+    class Callback
+      def initialize(method, options)
+        @method = method
+        @options = options
+      end
+
+      def match?(action)
+        if @options[:only]
+          @options[:only].include? action.to_sym
+        else
+          true
+        end
+      end
+
+      def call(controller)
+        controller.send @method
+      end
+    end
+    # def self.before_action(_method); end
+    # 换一种写法
+    def self.included(base)
+      base.extend ClassMethods
+    end
+
+    module ClassMethods
+      def before_action(method, options={})
+        before_actions << Callback.new(method, options)
+      end
+
+      def before_actions
+        @before_action ||= []
+      end
+    end
+
+    def process(action)
+      # TODO execute the callbacks ...
+      self.class.before_actions.each do |callback|
+        if callback.match?(action)
+          callback.call(self)
+        end
+      end
+
+      super
+    end
+  end
+end
