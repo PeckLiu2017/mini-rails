@@ -1,16 +1,18 @@
 require_relative 'spec_helper'
 # autoload 仅作用于应用中
 # mini-rails 的 active_record 文件还是要 require 加载
-require 'active_record'
-require 'active_support'
+# require 'active_record'
+# require 'active_support'
+# require_relative 'muffin_blog/config/environment' # 转移至 spec/spec_helper.rb
 
 RSpec.describe "ActiveSupportTest" do
-  it "setup" do
-    # 返回从家目录开始的到 app 目录下所有子文件夹的绝对路径
-    # 比如 /Users/peckliu/Ruby_project/mini-rails/spec/muffin_blog/app/assets
-    # /Users/peckliu/Ruby_project/mini-rails/spec/muffin_blog/app/channels 等
-    ActiveSupport::Dependencies.autoload_paths = Dir["#{__dir__}/muffin_blog/app/*"]
-  end
+  # setup 建立数据库连接的函数转移至 railties 部分
+  # it "setup" do
+  #   # 返回从家目录开始的到 app 目录下所有子文件夹的绝对路径
+  #   # 比如 /Users/peckliu/Ruby_project/mini-rails/spec/muffin_blog/app/assets
+  #   # /Users/peckliu/Ruby_project/mini-rails/spec/muffin_blog/app/channels 等
+  #   ActiveSupport::Dependencies.autoload_paths = Dir["#{__dir__}/muffin_blog/app/*"]
+  # end
 
   it "test_search_for_file" do
     file = ActiveSupport::Dependencies.search_for_file("application_controller")

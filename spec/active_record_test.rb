@@ -1,5 +1,5 @@
 require_relative 'spec_helper'
-require 'active_record'
+# require 'active_record' # 移动到 lib/rails/all.rb 中
 require_relative 'muffin_blog/app/models/application_record'
 require_relative 'muffin_blog/app/models/post'
 # class Module
@@ -13,11 +13,12 @@ require_relative 'muffin_blog/app/models/post'
 # end
 
 RSpec.describe "ActiveRecordTest" do
-  it "setup" do
-    Post.establish_connection(
-      database: "#{__dir__}/muffin_blog/db/development.sqlite3"
-    )
-  end
+  # setup 建立数据库连接的函数转移至 railties 部分
+  # it "setup" do
+  #   Post.establish_connection(
+  #     database: "#{__dir__}/muffin_blog/db/development.sqlite3"
+  #   )
+  # end
 
   it "test_initialize" do
     post = Post.new(:id => 1, :title => "test")
