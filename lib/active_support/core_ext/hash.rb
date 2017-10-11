@@ -11,9 +11,11 @@ class Hash
     keys.each do |key|
       # nil.to_sym rescue nil
       # => nil
+      # delete 会返回被删除的值
       # self = {"id"=>1} 的情况下
       # 下面的程序输出
       # self[id] = 1
+      # 同时散列中的 :id => 1 键值对被删除
       self[(begin
               key.to_sym
             rescue
