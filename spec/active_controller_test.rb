@@ -3,7 +3,7 @@ require_relative 'spec_helper'
 RSpec.describe "ActionControllerTest" do
   class TestController < ActionController::Base
     before_action :callback, only: [:show]
-
+    after_action :callback_after, only: [:show]
     def index
       response << "index"
     end
@@ -15,6 +15,10 @@ RSpec.describe "ActionControllerTest" do
     private
       def callback
         response << "callback"
+      end
+
+      def callback_after
+        response << "callback_after"
       end
   end
 
@@ -29,6 +33,6 @@ RSpec.describe "ActionControllerTest" do
     controller = TestController.new
     controller.response = []
     controller.process :show
-    expect(controller.response).to eq(["callback", "show"])
+    expect(controller.response).to eq(["callback", "show", "callback_after"])
   end
 end
