@@ -12,6 +12,10 @@ RSpec.describe "ActionControllerTest" do
       response << "show"
     end
 
+    def redirect
+      redirect_to "/"
+    end
+
     private
       def callback
         response << "callback"
@@ -46,5 +50,19 @@ RSpec.describe "ActionControllerTest" do
     controller = PostsController.new
     controller.request = Request.new
     controller.process :show
+    expect(controller.instance_variable_get(:@post)).to be_a(Post)
+  end
+
+  class Response
+    attr_accessor :status, :location, :body
+  end
+
+  it "test_redirect_to" do
+    controller = TestController.new
+    controller.response = Response.new
+    controller.process :redirect
+    expect(controller.response.status).to eq(302)
+    expect(controller.response.location).to eq("/")
+    expect(controller.response.body).to eq(["You are being redirected"])
   end
 end
