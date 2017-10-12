@@ -7,9 +7,9 @@ module ActionDispatch
     # 否则，该结构体的名称将在类Struct中显示为常量
     # 因此对系统中的所有结构体必须是唯一的，并且必须以大写字母开头
     # 将一个结构类分配给一个常量也为该类提供了常量的名称
-    class Route < Struct.new(:method,:path,:controller,:action,:name)
-      # 匹配请求的参数
-      # 通过则进行下一步处理
+    class Route < Struct.new(:method, :path, :controller, :action, :name)
+      # 匹配请求的路径参数
+      # 路径符合则进行下一步处理
       def match?(request)
         # p self
         # #<struct ActionDispatch::Routing::Route method="GET", path="/posts", controller="posts", action="index", name=nil>
@@ -19,8 +19,16 @@ module ActionDispatch
         request.request_method == method && request.path_info == path
       end
 
-      def draw
+      def controller_class
+        "#{controller.classify}Controller".constantize
+      end
 
+      def dispatch(request)
+        controller = controller_class.new
+        controller.request = request
+        controller.response = Rack::Response.new
+        controller.process(action)
+        controller.response.finish
       end
     end
 
@@ -57,6 +65,16 @@ module ActionDispatch
         mapper.instance_eval(&block)
       end
 
+      def call(env)
+        request = Rack::Request.new(env)
+        # p request
+        # #<Rack::Request:0x007fd65203ecd0 @params=nil, @env={"REQUEST_METHOD"=>"GET", "PATH_INFO"=>"/posts/new"}>
+        if route = find_route(request)
+          route.dispatch(request)
+        else
+          [404, { 'Content-Type' => 'text/plain' }, ['Not found']]
+        end
+      end
     end
   end
 end

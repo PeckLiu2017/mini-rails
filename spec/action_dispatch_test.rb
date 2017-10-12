@@ -48,4 +48,19 @@ RSpec.describe 'ActionDispatchTest' do
     expect(route.name).to eq('new_post') # new_post_path helper
   end
 
+  it 'test_call' do
+    routes = ActionDispatch::Routing::RouteSet.new
+    routes.draw do
+      root to: 'posts#index'
+      resources :posts
+    end
+
+    env = {
+      'REQUEST_METHOD' => 'GET',
+      'PATH_INFO' => '/posts/new'
+    }
+    status, headers, body = routes.call(env)
+
+    expect(status).to eq(200)
+  end
 end
