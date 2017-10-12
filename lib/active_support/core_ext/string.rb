@@ -10,4 +10,8 @@ class String
       tr("-","_").
       downcase
   end
+
+  def singularize
+    self.chomp 's'
+  end
 end
