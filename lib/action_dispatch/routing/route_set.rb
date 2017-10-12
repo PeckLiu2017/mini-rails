@@ -8,7 +8,9 @@ module ActionDispatch
     # 因此对系统中的所有结构体必须是唯一的，并且必须以大写字母开头
     # 将一个结构类分配给一个常量也为该类提供了常量的名称
     class Route < Struct.new(:method,:path,:controller,:action)
-
+      def match?(request)
+        request.request_method == method && request.path_info == path
+      end
     end
 
     class RouteSet
@@ -19,11 +21,17 @@ module ActionDispatch
       def add_route(*args)
         route = Route.new(*args)
         @routes << route
+        # p route
+        # =>#<struct ActionDispatch::Routing::Route method="GET", path="/posts", controller="posts", action="index">
         route
         # 解析处理路径的 *args
         # 找出 :controller.:action
         # 分配请求的 :controller.:action 路径
         # 执行代码
+      end
+
+      def find_route(request)
+        @routes.detect { |route| route.match?(request) }
       end
     end
   end

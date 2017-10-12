@@ -20,6 +20,8 @@ module ActiveSupport
 end
 
 class Module
+  remove_method :const_missing
+
   def const_missing(name)
     if file = ActiveSupport::Dependencies.search_for_file(name.to_s.underscore)
       require file.sub(/\.rb$/,'')
