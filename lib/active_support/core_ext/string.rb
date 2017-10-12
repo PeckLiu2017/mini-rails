@@ -7,7 +7,7 @@ class String
   # => #<Enumerator: "hello":gsub(/[aeiou]/)>
   # 在块形式中，当前匹配字符串作为参数传入，并且将适当地设置诸如$ 1，$ 2，$`，$＆和$'的变量。块返回的值将替代每次调用的匹配
   # "hello".gsub(/./) {|s| s.ord.to_s + ' '}      #=> "104 101 108 108 111 "
-  # "hello".gsub(/l/) {|s| s.ord.to_s + ' '}      #=> "he108 108 o" 
+  # "hello".gsub(/l/) {|s| s.ord.to_s + ' '}      #=> "he108 108 o"
 
   def underscore
     # 关于正则表达式
