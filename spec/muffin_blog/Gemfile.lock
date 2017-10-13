@@ -2,11 +2,13 @@ PATH
   remote: ../..
   specs:
     mini-rails (0.0.1)
+      rack (~> 2.x)
 
 GEM
   remote: https://rubygems.org/
   specs:
     diff-lcs (1.3)
+    rack (2.0.3)
     rake (10.5.0)
     rspec (3.6.0)
       rspec-core (~> 3.6.0)

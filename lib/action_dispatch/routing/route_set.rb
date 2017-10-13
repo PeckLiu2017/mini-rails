@@ -24,6 +24,11 @@ module ActionDispatch
       end
 
       def dispatch(request)
+        # 寻找文件
+        # 寻找或新增相应 controller 常量
+        # 建立 controller 的实例
+        # 执行 action
+        # 返回响应
         controller = controller_class.new
         controller.request = request
         controller.response = Rack::Response.new

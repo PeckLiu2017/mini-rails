@@ -48,19 +48,50 @@ RSpec.describe 'ActionDispatchTest' do
     expect(route.name).to eq('new_post') # new_post_path helper
   end
 
+  # it 'test_call' do
+  #   routes = ActionDispatch::Routing::RouteSet.new
+  #   routes.draw do
+  #     root to: 'posts#index'
+  #     resources :posts
+  #   end
+  #
+  #   env1 = {
+  #     'REQUEST_METHOD' => 'GET',
+  #     'PATH_INFO' => '/posts/new'
+  #   }
+  #
+  #   env2 = {
+  #     'REQUEST_METHOD' => 'GET',
+  #     'PATH_INFO' => '/posts/show?id=1'
+  #   }
+  #
+  #   status1, headers1, body1 = routes.call(env1)
+  #   status2, headers2, body2 = routes.call(env2)
+  #
+  #   expect(status1).to eq(200)
+  #   expect(status2).to eq(404)
+  # end
+
   it 'test_call' do
     routes = ActionDispatch::Routing::RouteSet.new
+    # p routes
+    # #<ActionDispatch::Routing::RouteSet:0x007ff282a52a90 @routes=[]>
     routes.draw do
       root to: 'posts#index'
       resources :posts
     end
-
-    env = {
-      'REQUEST_METHOD' => 'GET',
-      'PATH_INFO' => '/posts/new'
-    }
-    status, headers, body = routes.call(env)
-
-    expect(status).to eq(200)
+    # p routes
+    request = Rack::MockRequest.new(routes)
+    # p request
+    #<Rack::MockRequest:0x007fe9b62e9c38 @app=#<ActionDispatch::Routing::RouteSet:0x007fe9b62eb3f8
+    # @routes=[#<struct ActionDispatch::Routing::Route method="GET", path="/", controller="posts", action="index", name="root">,
+    # #<struct ActionDispatch::Routing::Route method="GET", path="/posts", controller="posts", action="index", name="posts">,
+    # #<struct ActionDispatch::Routing::Route method="GET", path="/posts/new", controller="posts", action="new", name="new_post">,
+    # #<struct ActionDispatch::Routing::Route method="GET", path="/posts/show", controller="posts", action="show", name="post">]>>
+    expect(request.get("/").status).to eq(200)
+    expect(request.get("/posts").status).to eq(200)
+    expect(request.get("/posts/new").status).to eq(200)
+    # expect(request.get("/posts/show?id=1").status).to eq(200)
+    expect(request.post("/").status).to eq(404)
   end
 end

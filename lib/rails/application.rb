@@ -11,6 +11,10 @@ module Rails
       @instance
     end
 
+    def routes
+      @routes ||= ActionDispatch::Routing::RouteSet.new
+    end
+
     def initialize!
       # 返回从家目录开始的到 app 目录下所有子文件夹的绝对路径
       # 比如 /Users/peckliu/Ruby_project/mini-rails/spec/muffin_blog/app/assets
@@ -28,6 +32,7 @@ module Rails
       ActiveRecord::Base.establish_connection(
         database: "#{@root}/db/#{Rails.env}.sqlite3"
       )
+      load @root.join("config/routes.rb")
     end
 
     def root

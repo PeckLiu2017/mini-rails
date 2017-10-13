@@ -1,6 +1,8 @@
 require "bundler/setup"
+$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 # require "mini/rails"
 # p File.expand_path("mini/rails")
+require 'rack/mock'
 require_relative 'muffin_blog/config/environment'
 
 RSpec.configure do |config|
