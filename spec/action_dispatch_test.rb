@@ -73,14 +73,9 @@ RSpec.describe 'ActionDispatchTest' do
   # end
 
   it 'test_call' do
-    routes = ActionDispatch::Routing::RouteSet.new
+    routes = Rails.application.routes
     # p routes
     # #<ActionDispatch::Routing::RouteSet:0x007ff282a52a90 @routes=[]>
-    routes.draw do
-      root to: 'posts#index'
-      resources :posts
-    end
-    # p routes
     request = Rack::MockRequest.new(routes)
     # p request
     #<Rack::MockRequest:0x007fe9b62e9c38 @app=#<ActionDispatch::Routing::RouteSet:0x007fe9b62eb3f8
