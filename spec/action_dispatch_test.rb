@@ -1,4 +1,5 @@
 require_relative 'spec_helper'
+require "sprockets"
 
 RSpec.describe 'ActionDispatchTest' do
   # 测试能不能解析自己增加的路径
@@ -78,15 +79,31 @@ RSpec.describe 'ActionDispatchTest' do
     # #<ActionDispatch::Routing::RouteSet:0x007ff282a52a90 @routes=[]>
     request = Rack::MockRequest.new(routes)
     # p request
-    #<Rack::MockRequest:0x007fe9b62e9c38 @app=#<ActionDispatch::Routing::RouteSet:0x007fe9b62eb3f8
+    # <Rack::MockRequest:0x007fe9b62e9c38 @app=#<ActionDispatch::Routing::RouteSet:0x007fe9b62eb3f8
     # @routes=[#<struct ActionDispatch::Routing::Route method="GET", path="/", controller="posts", action="index", name="root">,
     # #<struct ActionDispatch::Routing::Route method="GET", path="/posts", controller="posts", action="index", name="posts">,
     # #<struct ActionDispatch::Routing::Route method="GET", path="/posts/new", controller="posts", action="new", name="new_post">,
     # #<struct ActionDispatch::Routing::Route method="GET", path="/posts/show", controller="posts", action="show", name="post">]>>
-    expect(request.get("/").status).to eq(200)
-    expect(request.get("/posts").status).to eq(200)
-    expect(request.get("/posts/new").status).to eq(200)
+    expect(request.get('/').status).to eq(200)
+    expect(request.get('/posts').status).to eq(200)
+    expect(request.get('/posts/new').status).to eq(200)
     # expect(request.get("/posts/show?id=1").status).to eq(200)
-    expect(request.post("/").status).to eq(404)
+    expect(request.post('/').status).to eq(404)
+  end
+
+  it 'test_middleware_stack' do
+    app = Rails.application
+
+    request = Rack::MockRequest.new(app)
+
+    expect(request.get('/').status).to eq(200)
+    expect(request.get('/posts').status).to eq(200)
+    expect(request.get('/posts/new').status).to eq(200)
+    # expect(request.get("/posts/show?id=1").status).to eq(200)
+    expect(request.post('/').status).to eq(404)
+
+    expect(request.get('/favicon.ico').status).to eq(200)
+    expect(request.get('/assets/application.js').status).to eq(200)
+    expect(request.get('/assets/application.css').status).to eq(200)
   end
 end
