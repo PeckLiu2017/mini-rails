@@ -17,6 +17,10 @@ module Rails
       @routes ||= ActionDispatch::Routing::RouteSet.new
     end
 
+    # 初始化
+    # 增加 autoload path
+    # 建立数据库连接
+    # 并产生路由
     def initialize!
       # 返回从家目录开始的到 app 目录下所有子文件夹的绝对路径
       # 比如 /Users/peckliu/Ruby_project/mini-rails/spec/muffin_blog/app/assets
@@ -41,6 +45,7 @@ module Rails
       @root
     end
 
+    # 启动中间件
     def default_middleware_stack
       Rack::Builder.new do
         use Rack::ContentLength

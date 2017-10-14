@@ -13,6 +13,7 @@ class PostsController < ApplicationController
   end
 
   def show
+    # response.write "<h2>#{@post.title}</h2>"
     render :show
   end
 

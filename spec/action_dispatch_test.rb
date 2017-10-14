@@ -87,7 +87,7 @@ RSpec.describe 'ActionDispatchTest' do
     expect(request.get('/').status).to eq(200)
     expect(request.get('/posts').status).to eq(200)
     expect(request.get('/posts/new').status).to eq(200)
-    # expect(request.get("/posts/show?id=1").status).to eq(200)
+    expect(request.get("/posts/show?id=1").status).to eq(200)
     expect(request.post('/').status).to eq(404)
   end
 
@@ -99,7 +99,7 @@ RSpec.describe 'ActionDispatchTest' do
     expect(request.get('/').status).to eq(200)
     expect(request.get('/posts').status).to eq(200)
     expect(request.get('/posts/new').status).to eq(200)
-    # expect(request.get("/posts/show?id=1").status).to eq(200)
+    expect(request.get("/posts/show?id=1").status).to eq(200)
     expect(request.post('/').status).to eq(404)
 
     expect(request.get('/favicon.ico').status).to eq(200)

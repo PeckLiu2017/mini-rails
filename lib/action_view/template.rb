@@ -25,12 +25,13 @@ module ActionView
       compile
       # 执行 CompiledTemplates 里面的代码
       # &block
+      # 这个 method_name 是下面 CompiledTemplates module_eval 定义的方法
       context.send(method_name, &block)
     end
 
     # 将非数字字母的内容换成 '_'
     def method_name
-      @name.gsub(/[^\w]/,'_')
+      @name.gsub(/[^\w]/, '_')
     end
 
     def compile
@@ -38,6 +39,7 @@ module ActionView
       return if @compiled
       # src 方法编译传进来的 ruby 代码
       code = ERB.new(@source).src
+      # p '---------------1111111111111111'
       # code 的内容:
       # p code
       # "#coding:UTF-8\n_erbout = ''; _erbout.concat \"<p>\";
