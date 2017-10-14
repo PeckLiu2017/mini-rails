@@ -25,4 +25,10 @@ RSpec.describe 'ActionViewTest' do
     expect(template.render(context) { "yielded content" }).to eq("<p>yielded content</p>")
   end
 
+  it "test_render_with_helper" do
+    template = ActionView::Template.new("<%= link_to 'title', '/url' %>", "test_render_with_helper")
+
+    context = ActionView::Base.new
+    expect(template.render(context)).to eq("<a href=\"/url\">title</a>")
+  end
 end
