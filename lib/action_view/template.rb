@@ -8,10 +8,13 @@ module ActionView
       cache[file] = Template.new(File.read(file), file)
     end
 
+    # 如果缓存中存在
+    # 直接从 hash 里面取
+    # 否则 Hash.new 新建
     def self.find(file)
       CACHE[file]
     end
-    
+
     def initialize(source,name)
       @source = source
       @name = name

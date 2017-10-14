@@ -40,4 +40,16 @@ RSpec.describe 'ActionViewTest' do
     template2 = ActionView::Template.find(file)
     expect(template1).to eq(template2)
   end
+
+  class TestController < ActionController::Base
+    def index
+      @var = "var value"
+    end
+  end
+
+  it "test_view_assigns" do
+    controller = TestController.new
+    controller.index
+    expect(controller.view_assigns).to eq({'var' => 'var value'})
+  end
 end
