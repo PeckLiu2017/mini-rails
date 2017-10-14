@@ -32,7 +32,7 @@ module ActionDispatch
         controller = controller_class.new
         controller.request = request
         controller.response = Rack::Response.new
-        # p controller
+        p controller
         #=> #<PostsController:0x007fa6a7dbbac8
         # @request=#<Rack::Request:0x007fa6a7dc89f8 @params=nil,
         # @env={"rack.version"=>[1, 3], "rack.input"=>#<StringIO:0x007fa6a6824138>, "rack.errors"=>#<StringIO:0x007fa6a68241b0>, "rack.multithread"=>true, "rack.multiprocess"=>true, "rack.run_once"=>false, "REQUEST_METHOD"=>"GET", "SERVER_NAME"=>"example.org", "SERVER_PORT"=>"80", "QUERY_STRING"=>"id=1", "PATH_INFO"=>"/posts/show", "rack.url_scheme"=>"http", "HTTPS"=>"off", "SCRIPT_NAME"=>"", "CONTENT_LENGTH"=>"0"}>,
@@ -88,6 +88,27 @@ module ActionDispatch
           [404, { 'Content-Type' => 'text/plain' }, ['Not found']]
         end
       end
+
+      def url_helpers
+        routes = @routes
+
+        Module.new do
+          routes.each do |route|
+            if route.name
+              define_method(route.name + "_path") do |params = nil|
+                if params
+                  route.path + "?" + Rack::Utils.build_query(params)
+                else
+                  route.path
+                end
+              end
+
+              # Not implemented _url helper
+            end
+          end
+        end
+      end
+
     end
   end
 end
