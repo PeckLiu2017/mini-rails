@@ -2,6 +2,16 @@ require 'erb'
 
 module ActionView
   class Template
+    # Template 实例没有被销毁时
+    # 缓存就一直存在
+    CACHE = Hash.new do |cache, file|
+      cache[file] = Template.new(File.read(file), file)
+    end
+
+    def self.find(file)
+      CACHE[file]
+    end
+    
     def initialize(source,name)
       @source = source
       @name = name

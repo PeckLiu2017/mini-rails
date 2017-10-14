@@ -31,4 +31,13 @@ RSpec.describe 'ActionViewTest' do
     context = ActionView::Base.new
     expect(template.render(context)).to eq("<a href=\"/url\">title</a>")
   end
+
+  # 不想重新建一个实例,重载,重新定义,编译
+  # 所以缓存
+  it "test_find_template" do
+    file = "#{__dir__}/muffin_blog/app/views/posts/index.html.erb"
+    template1 = ActionView::Template.find(file)
+    template2 = ActionView::Template.find(file)
+    expect(template1).to eq(template2)
+  end
 end
