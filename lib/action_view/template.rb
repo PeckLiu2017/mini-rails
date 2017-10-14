@@ -8,8 +8,10 @@ module ActionView
       @compile = false
     end
 
-    def render(context)
+    def render(context, &block)
       compile
+      # 执行 CompiledTemplates 里面的代码
+      # &block
       context.send(method_name, &block)
     end
 
@@ -23,7 +25,12 @@ module ActionView
       return if @compiled
       # src 方法编译传进来的 ruby 代码
       code = ERB.new(@source).src
-      # CompiledTemplates 里面执行代码
+      # code 的内容:
+      # p code
+      # "#coding:UTF-8\n_erbout = ''; _erbout.concat \"<p>\";
+      # _erbout.concat(( yield ).to_s); _erbout.concat \"</p>\";
+      # _erbout.force_encoding(__ENCODING__)"
+      # 将代码放进 CompiledTemplates 中
       CompiledTemplates.module_eval <<-CODE
         def #{method_name}
           #{code}
