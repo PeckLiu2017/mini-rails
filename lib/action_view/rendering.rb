@@ -18,7 +18,11 @@ module ActionView
       # 有了 @source 和 @name 变量
       # 就根据 @name 生成方法并生成显示代码
       content = Template.find(path).render(context)
-      response.body = [content]
+      body = Template.find(layout_path).render(context) do
+        content
+      end
+
+      response.body = [body]
     end
 
     def view_assigns
@@ -32,6 +36,10 @@ module ActionView
 
     def template_path(action)
       "#{Rails.root}/app/views/#{controller_name}/#{action}.html.erb"
+    end
+
+    def layout_path
+      "#{Rails.root}/app/views/layouts/application.html.erb"
     end
 
     def controller_name

@@ -74,6 +74,6 @@ RSpec.describe 'ActionViewTest' do
     # p response
     #<ActionView::Base:0x007fe95d293670 @request=#<Rack::Request:0x007fe95d2d0340 @params={"id"=>"1"}, @env={"rack.version"=>[1, 3], "rack.input"=>#<StringIO:0x007fe95d887d60>, "rack.errors"=>#<StringIO:0x007fe95d887dd8>, "rack.multithread"=>true, "rack.multiprocess"=>true, "rack.run_once"=>false, "REQUEST_METHOD"=>"GET", "SERVER_NAME"=>"example.org", "SERVER_PORT"=>"80", "QUERY_STRING"=>"id=1", "PATH_INFO"=>"/posts/show", "rack.url_scheme"=>"http", "HTTPS"=>"off", "SCRIPT_NAME"=>"", "CONTENT_LENGTH"=>"0", "rack.request.query_string"=>"id=1", "rack.request.query_hash"=>{"id"=>"1"}}>, @response=#<Rack::Response:0x007fe95d2a9380 @status=200, @header={}, @writer=#<Proc:0x007fe95d2a9218@/Users/peckliu/.rvm/gems/ruby-2.3.3@global/gems/rack-2.0.3/lib/rack/response.rb:32 (lambda)>, @block=nil, @length=0, @body=[]>, @post=#<Post:0x007fe95d2a12e8 @attributes={:id=>1, :title=>"title1", :body=>"body1", :created_at=>"2017-10-13 06:58:43.974730", :updated_at=>"2017-10-13 06:58:43.974730"}>>
     expect(response.body).to include("<h1>title1</h1>")
-    # puts response.body
+    expect(response.body).to include("<html>")
   end
 end
