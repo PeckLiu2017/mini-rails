@@ -32,6 +32,14 @@ module ActionDispatch
         controller = controller_class.new
         controller.request = request
         controller.response = Rack::Response.new
+        # p controller
+        #=> #<PostsController:0x007fa6a7dbbac8
+        # @request=#<Rack::Request:0x007fa6a7dc89f8 @params=nil,
+        # @env={"rack.version"=>[1, 3], "rack.input"=>#<StringIO:0x007fa6a6824138>, "rack.errors"=>#<StringIO:0x007fa6a68241b0>, "rack.multithread"=>true, "rack.multiprocess"=>true, "rack.run_once"=>false, "REQUEST_METHOD"=>"GET", "SERVER_NAME"=>"example.org", "SERVER_PORT"=>"80", "QUERY_STRING"=>"id=1", "PATH_INFO"=>"/posts/show", "rack.url_scheme"=>"http", "HTTPS"=>"off", "SCRIPT_NAME"=>"", "CONTENT_LENGTH"=>"0"}>,
+        # @response=#<Rack::Response:0x007fa6a7dbbaa0
+        # @status=200,
+        # @header={},
+        # @writer=#<Proc:0x007fa6a7dbb938@/Users/peckliu/.rvm/gems/ruby-2.3.3@global/gems/rack-2.0.3/lib/rack/response.rb:32 (lambda)>, @block=nil, @length=0, @body=[]>>
         controller.process(action)
         controller.response.finish
       end

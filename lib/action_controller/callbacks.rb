@@ -46,6 +46,8 @@ module ActionController
     end
 
     def process(action)
+      # process方法 第二步先进入 ImplicitRender 中的 process
+      # 但执行到 super 之后来到这里
       # 这里的 process 覆盖了父类中的方法 process
       # p self.class.before_actions #=>
       # [#<ActionController::Callbacks::Callback:0x007f80f603e548 @method=:callback, @options={:only=>[:show]}>]

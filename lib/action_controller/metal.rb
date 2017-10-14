@@ -3,6 +3,10 @@ module ActionController
     attr_accessor :request, :response
 
     def process(action)
+      # process 第三步在 callbacks 中
+      # 第四步这里
+      # 然后回到 lib/action_controller/implicit_render.rb 中
+      # 做判断是否 render action
       send action
     end
 
